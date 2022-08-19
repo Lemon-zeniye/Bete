@@ -1,28 +1,31 @@
-import React, {useState} from 'react';
-import Form from "./Components/Form";
-import Header from "./Components/Header";
-import Footer from "./Components/Footer";
-import TasksList from "./Components/TasksList"
-import "./App.css";
+import { useState } from "react";
+import { SideB, BigDiv, SmallDiv,A } from "./AppStyle";
+import Drink from "./components/Drink/Drink";
+import Food from "./components/Food/Food";
+import Home from "./components/Home/Home";
+import Navbar from "./components/Nav/Nav";
+import Location from "./components/Location/Location";
 const App = () => {
-     const [inputText, setInputText] = useState("");
-     const [times, setTime] = useState("");
-     const [reminder, setReminder] = useState(false);
-     const [Toggle , setToggle] = useState(false);
-     const [tasks, setTasks] = useState([]);
-     const addButtonHandeler = () =>{
-         setToggle(!Toggle);
-     }
-    return (
-        <div className="app-dv">
-            <div className="inner-div"> 
-                <Header  onToggle={addButtonHandeler} />
-                {Toggle && <Form setInputText={setInputText} setTasks={setTasks} tasks={tasks} inputText={inputText} setTime={setTime} times={times} setReminder={setReminder} reminder={reminder} />}
-             {tasks.length > 0 ? <TasksList times={times} tasks={tasks} setTasks={setTasks} reminder={reminder} /> : "The List is Empty!!!"}
-                <Footer/>
-            </div>
-        </div>
+    const [active, setActive] = useState(false);
+    const [night, setNight] = useState(false);
+    return(
+        <BigDiv>
+            <SideB active={active}  >
+               <ul>
+                   <li onClick={() => setActive(!active)} ><A href="#HOME">Home</A></li>
+                   <li onClick={() => setActive(!active)} ><A href="#DRINK">Drink Menu</A></li>
+                   <li onClick={() => setActive(!active)} ><A href="#FOOD">Food Menu</A></li>
+                   <li onClick={() => setActive(!active)} ><A href="#LOCATION">Location</A></li>
+               </ul>
+            </SideB>
+            <SmallDiv>
+                <Navbar   night={night} setNight={setNight}  active={active} setActive={setActive} />
+                <Home  night={night} setNight={setNight}  active={active} setActive={setActive}/>
+                <Drink  night={night} setNight={setNight} />
+                <Food   night={night} setNight={setNight} />
+                <Location   night={night} setNight={setNight} />
+           </SmallDiv>
+        </BigDiv>
     )
 }
-
-export default App;
+export default App; 
